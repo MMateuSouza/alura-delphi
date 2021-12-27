@@ -55,7 +55,7 @@ type
     procedure btnSearchClick(Sender: TObject);
     procedure btnListContactsClick(Sender: TObject);
   private
-    { Private declarations }
+    function checkInput(inputDesc: string): string;
   public
     { Public declarations }
   end;
@@ -183,30 +183,22 @@ end;
 
 procedure TContacts.loadContact;
 begin
-  if fdcontacts.FieldByName('pk').Value <> NULL then
-    inputPk.Text := fdcontacts.FieldByName('pk').Value
-  else
-    inputPk.Text := '';
+  inputPk.Text := checkInput('pk');
+  inputName.Text := checkInput('name');
+  inputPhone.Text := checkInput('phone');
+  inputEmail.Text := checkInput('mail');
+  inputObservations.Text := checkInput('observation');
+end;
 
-  if fdcontacts.FieldByName('name').Value <> NULL then
-    inputName.Text := fdcontacts.FieldByName('name').Value
+function TContacts.checkInput(inputDesc: string): string;
+var
+  inputValue: string;
+begin
+  if fdcontacts.FieldByName(inputDesc).Value <> Null then
+    inputValue := fdcontacts.FieldByName(inputDesc).Value
   else
-    inputName.Text := '';
-
-  if fdcontacts.FieldByName('phone').Value <> NULL then
-    inputPhone.Text := fdcontacts.FieldByName('phone').Value
-  else
-    inputPhone.Text := '';
-
-  if fdcontacts.FieldByName('mail').Value <> NULL then
-    inputEmail.Text := fdcontacts.FieldByName('mail').Value
-  else
-    inputEmail.Text := '';
-
-  if fdcontacts.FieldByName('observation').Value <> Null then
-    inputObservations.Text := fdcontacts.FieldByName('observation').Value
-  else
-    inputObservations.Text := '';
+    inputValue := '';
+  result := inputValue;
 end;
 
 end.
